@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en-MY">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthy Recipes</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Cinzel&display=swap">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../Recipes/style.css" />
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      color: #000;
+      position: relative;
+      z-index: 1;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('../Image/nutration_food.jpg');
+      background-size: cover;
+      background-position: center;
+      filter: blur(8px);
+      z-index: -1;
+    }
+
+    h1 {
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-size: 55px;
+      margin: 40px 0 20px;
+      color: white;
+    }
+
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .recipe-card {
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 375px;
+      transition: transform 0.2s;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .recipe-card:hover {
+      transform: scale(1.02);
+    }
+
+    .recipe-card:hover img {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .recipe-card img {
+      width: 100%;
+      height: fit-content;
+      display: block;
+    }
+
+    .card-content {
+      padding: 15px;
+      color: #000;
+    }
+
+    .card-content h2 a {
+      text-decoration: none;
+      color: #0b3d75;
+    }
+
+    .card-content p {
+      margin: 0.5em 0;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background-color: #0b3d75;
+      color: white;
+      padding: 12px 25px;
+      border-radius: 25px;
+      font-size: 18px;
+      font-family: 'Cinzel', serif;
+      text-decoration: none;
+      text-align: center;
+      transition: background-color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #095a9a;
+    }
+
+    .home-btn {
+      background-color: #4CAF50;
+    }
+
+    .home-btn:hover {
+      background-color: #45a049;
+    }
+
+    .calculator-btn {
+      background-color: #f44336;
+    }
+
+    .calculator-btn:hover {
+      background-color: #e53935;
+    }
+
+    .favorite-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .favorite-btn.active {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="../Index/index.html">Health Living</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="../Recipes/recipes.html">Healthy Recipes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Nutrition/nutrition-calculator.html">Nutrition Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Fitness/fitness.html">Fitness Plans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Tutorials/tutorials.html">Exercise Tutorials</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Healthy Tips/healthytips.html">Healthy Tips</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Community/community.html">Community Hub</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../About Us/aboutus.html">About Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <h1>Healthy Recipes</h1>
+  <div class="card-container">
+    <div class="recipe-card" data-title="Oatmeal Pecan Waffles">
+      <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
+      <a href="https://www.nutrition.gov/recipes/oatmeal-pecan-waffles" target="_blank">
+        <img src="../Image/Oatmeal Pecan Waffles.jpeg" alt="Oatmeal Pecan Waffles">
+      </a>
+      <div class="card-content">
+        <h2><a href="https://www.nutrition.gov/recipes/oatmeal-pecan-waffles" target="_blank">Oatmeal Pecan Waffles</a>
+        </h2>
+        <p>Kids will love these whole-grain waffles made with whole-wheat flour and oats.</p>
+        <p><strong>Category:</strong> Kid-Friendly</p>
+        <p><strong>Food group:</strong> Fruits, Grains</p>
+      </div>
+    </div>
+    <div class="recipe-card" data-title="Roasted Root Vegetables">
+      <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
+      <a href="https://www.nutrition.gov/recipes/roasted-root-vegetables" target="_blank">
+        <img src="../Image/Roasted-root-vegetables.jpg" alt="Roasted Root Vegetables">
+      </a>
+      <div class="card-content">
+        <h2><a href="https://www.nutrition.gov/recipes/roasted-root-vegetables" target="_blank">Roasted Root
+            Vegetables</a></h2>
+        <p>Let root veggies shine! Bring out the flavor of sweet potatoes, rutabaga, carrots, and more in this recipe.
+        </p>
+        <p><strong>Category:</strong> 30 Minutes or Less</p>
+        <p><strong>Food group:</strong> Vegetables</p>
+      </div>
+    </div>
+    <div class="recipe-card" data-title="Spinach-Artichoke Gnocchi">
+      <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
+      <a href="https://www.eatingwell.com/spinach-artichoke-gnocchi-skillet-with-feta-11684040" target="_blank">
+        <img src="../Image/Spinach-ArtichokeGnocchi.jpg" alt="Spinach-Artichoke Gnocchi">
+      </a>
+      <div class="card-content">
+        <h2><a href="https://www.eatingwell.com/spinach-artichoke-gnocchi-skillet-with-feta-11684040"
+            target="_blank">Spinach-Artichoke Gnocchi</a></h2>
+        <p>This spinach-artichoke gnocchi skillet recipe is the ultimate weeknight dinner. It’s quick, easy and doesn’t
+          skimp on flavor.</p>
+        <p><strong>Category:</strong> Mediterranean Diet</p>
+        <p><strong>Food group:</strong> Vegetables, No Added Sugar</p>
+      </div>
+    </div>
+    <div class="recipe-card" data-title="Sherry, Berry and Custard Trifle Cups">
+      <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
+      <a href="https://www.healthyfood.com/healthy-recipes/sherry-berry-and-custard-trifle-cups/" target="_blank">
+        <img src="../Image/TrifleCups-800x509.jpg" alt="Sherry, Berry and Custard Trifle Cups">
+      </a>
+      <div class="card-content">
+        <h2><a href="https://www.healthyfood.com/healthy-recipes/sherry-berry-and-custard-trifle-cups/"
+            target="_blank">Sherry, Berry and Custard Trifle Cups</a></h2>
+        <p>Take a trip back to the 70s with this retro dessert. Our sherry, berry and custard trifle serves eight people
+          making it a great sweet option for a dinner party.</p>
+        <p><strong>Category:</strong> Dessert</p>
+        <p><strong>Food group:</strong> Fruits</p>
+      </div>
+    </div>
+    <div class="recipe-card" data-title="Chicken and Quinoa Salad with Strawberries">
+      <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
+      <a href="https://www.healthyfood.com/healthy-recipes/chicken-and-quinoa-salad-with-strawberries/" target="_blank">
+        <img src="../Image/Chicken-quinoa-salad-with-strawberries-800x744.jpg"
+          alt="Chicken and Quinoa Salad with Strawberries">
+      </a>
+      <div class="card-content">
+        <h2><a href="https://www.healthyfood.com/healthy-recipes/chicken-and-quinoa-salad-with-strawberries/"
+            target="_blank">Chicken and Quinoa Salad with Strawberries</a></h2>
+        <p>Make your salads sing with the goodness of juicy, delicious fruit!</p>
+        <p><strong>Category:</strong> Salad</p>
+        <p><strong>Food group:</strong> Chicken, Vegetables, Fruits</p>
+      </div>
+    </div>
+    <div class="recipe-card" data-title="Caribbean Tofu and Sweet Potato Curry with Rice and Peas">
+      <button class="favorite-btn" onclick="toggleFavorite(this)">🤍</button>
+      <a href="https://www.nhs.uk/healthier-families/recipes/caribbean-tofu-and-sweet-potato-curry-with-rice-and-peas/"
+        target="_blank">
+        <img src="../Image/4.-Caribbean---Tofu-and-Sweet-potato-curry.width-510.jpg"
+          alt="Caribbean Tofu and Sweet Potato Curry with Rice and Peas">
+      </a>
+      <div class="card-content">
+        <h2><a
+            href="https://www.nhs.uk/healthier-families/recipes/caribbean-tofu-and-sweet-potato-curry-with-rice-and-peas/"
+            target="_blank">Caribbean Tofu and Sweet Potato Curry with Rice and Peas</a></h2>
+        <p>A tasty vegetarian curry combining classic Caribbean flavours with traditional rice and peas – the peas are
+          actually beans!</p>
+        <p><strong>Category:</strong> Caribbean Dish</p>
+        <p><strong>Food group:</strong> Spice, Rice, Vegetables</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function goHome() {
+      window.location.href = "homepage.html";
+    }
+    function goToNutritionCalculator() {
+      window.location.href = "nutrition-calculator.html";
+    }
+    function toggleFavorite(button) {
+      const card = button.closest('.recipe-card');
+      const title = card.getAttribute('data-title');
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      const index = favorites.indexOf(title);
+      if (index === -1) {
+        favorites.push(title);
+        button.classList.add('active');
+        button.textContent = '❤️';
+      } else {
+        favorites.splice(index, 1);
+        button.classList.remove('active');
+        button.textContent = '🤍';
+      }
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+    window.onload = function () {
+      let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+      document.querySelectorAll('.recipe-card').forEach(card => {
+        const title = card.getAttribute('data-title');
+        const button = card.querySelector('.favorite-btn');
+        if (favorites.includes(title)) {
+          button.classList.add('active');
+          button.textContent = '❤️';
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

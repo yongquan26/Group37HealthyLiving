@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness Tracker</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="fitness.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('../Image/fitness\ background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      color: white;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 30px;
+    }
+
+    .form-wrapper {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    input,
+    select,
+    button,
+    .tutorial-btn {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: none;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    button,
+    .tutorial-btn {
+      background-color: #ffcc00;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      text-align: center;
+    }
+
+    button:hover,
+    .tutorial-btn:hover {
+      background-color: #ffaa00;
+    }
+
+    .back-btn,
+    .logout-btn {
+      background-color: #555;
+      color: white;
+    }
+
+    .logout-btn {
+      margin-top: 10px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .table-plan {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+      background: rgba(255, 255, 255, 0.95);
+      color: #333;
+      font-size: 15px;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .table-plan th,
+    .table-plan td {
+      padding: 12px 10px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    .table-plan th {
+      background-color: #e0e0e0;
+      font-weight: bold;
+    }
+
+    .situation {
+      margin-top: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #ffd700;
+    }
+
+    .error-message {
+      color: #ff4444;
+      font-size: 14px;
+      margin-top: 5px;
+      text-align: center;
+    }
+
+    .register-reminder {
+      color: #ffcc00;
+      font-size: 14px;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .register-link {
+      color: #ffcc00;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body onload="checkUser()">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="../Index/index.html">Health Living</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="../Recipes/recipes.html">Healthy Recipes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Nutrition/nutrition-calculator.html">Nutrition Calculator</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Fitness/fitness.html">Fitness Plans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Tutorials/tutorials.html">Exercise Tutorials</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Healthy Tips/healthytips.html">Healthy Tips</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../Community/community.html">Community Hub</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="../About Us/aboutus.html">About Us</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container">
+    <h2>Fitness Tracker</h2>
+
+    <div id="login-register-section">
+      <button onclick="showRegister()">Register</button>
+      <button onclick="showLogin()">Login</button>
+    </div>
+
+    <div id="register-section" class="hidden">
+      <h3>Register</h3>
+      <div class="form-wrapper">
+        <input type="text" id="reg-username" placeholder="Username">
+        <input type="password" id="reg-password" placeholder="Password">
+        <button onclick="registerUser()">Register</button>
+        <button class="back-btn" onclick="backToLoginRegister()">Back</button>
+      </div>
+    </div>
+
+    <div id="login-section" class="hidden">
+      <h3>Login</h3>
+      <div class="form-wrapper">
+        <input type="text" id="login-username" placeholder="Username">
+        <input type="password" id="login-password" placeholder="Password">
+        <button onclick="loginUser()">Login</button>
+        <button class="back-btn" onclick="backToLoginRegister()">Back</button>
+        <div id="login-error" class="error-message"></div>
+        <div id="register-reminder" class="register-reminder hidden">
+          Username not found. <span class="register-link" onclick="showRegisterWithUsername()">Register here</span>
+          first.
+        </div>
+      </div>
+    </div>
+
+    <div id="change-password-section" class="hidden">
+      <h3>Change Password</h3>
+      <p>You've entered the wrong password 3 times. Please change your password.</p>
+      <div class="form-wrapper">
+        <input type="text" id="change-username" placeholder="Username" readonly>
+        <input type="password" id="new-password" placeholder="New Password">
+        <button onclick="changePassword()">Change Password</button>
+        <button class="back-btn" onclick="backToLogin()">Back to Login</button>
+      </div>
+    </div>
+
+    <div id="info-section" class="hidden">
+      <h3>Enter Your Info</h3>
+      <div class="form-wrapper">
+        <input type="text" id="age" placeholder="Age">
+        <select id="gender">
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <input type="text" id="height" placeholder="Height (cm)">
+        <input type="text" id="weight" placeholder="Weight (kg)">
+        <button onclick="saveUserInfo()">Submit Info</button>
+        <button class="logout-btn" onclick="logoutUser()">Log out</button>
+      </div>
+    </div>
+
+    <div id="result-section" class="hidden">
+      <h3>Your BMI Result</h3>
+      <p id="bmi-result"></p>
+      <div id="user-situation" class="situation"></div>
+
+      <h3>Your Fitness Plan</h3>
+      <div id="fitness-plan-table"></div>
+      <a href="../Tutorials/tutorials.html" class="tutorial-btn">Need Tutorial Video?</a>
+      <button class="logout-btn" onclick="logoutUser()">Log out</button>
+    </div>
+  </div>
+
+  <script>
+    function checkUser() {
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+      if (currentUser) {
+        document.getElementById("info-section").classList.remove("hidden");
+        document.getElementById("login-register-section").classList.add("hidden");
+        document.getElementById("register-section").classList.add("hidden");
+        document.getElementById("login-section").classList.add("hidden");
+        document.getElementById("change-password-section").classList.add("hidden");
+      }
+    }
+
+    function showRegister() {
+      document.getElementById("login-register-section").classList.add("hidden");
+      document.getElementById("register-section").classList.remove("hidden");
+      document.getElementById("reg-username").value = "";
+      document.getElementById("reg-password").value = "";
+    }
+
+    function showLogin() {
+      document.getElementById("login-register-section").classList.add("hidden");
+      document.getElementById("register-section").classList.add("hidden");
+      document.getElementById("change-password-section").classList.add("hidden");
+      document.getElementById("login-section").classList.remove("hidden");
+      document.getElementById("login-error").innerText = "";
+      document.getElementById("register-reminder").classList.add("hidden");
+      document.getElementById("login-username").value = "";
+      document.getElementById("login-password").value = "";
+    }
+
+    function backToLoginRegister() {
+      document.getElementById("register-section").classList.add("hidden");
+      document.getElementById("login-section").classList.add("hidden");
+      document.getElementById("change-password-section").classList.add("hidden");
+      document.getElementById("login-register-section").classList.remove("hidden");
+    }
+
+    function backToLogin() {
+      document.getElementById("change-password-section").classList.add("hidden");
+      document.getElementById("login-section").classList.remove("hidden");
+      document.getElementById("login-error").innerText = "";
+      document.getElementById("register-reminder").classList.add("hidden");
+    }
+
+    function registerUser() {
+      const username = document.getElementById("reg-username").value;
+      const password = document.getElementById("reg-password").value;
+      if (!username || !password) return alert("Please fill in all fields.");
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      if (users.some(user => user.username === username)) {
+        return alert("Username already exists!");
+      }
+
+      users.push({ username, password });
+      localStorage.setItem("users", JSON.stringify(users));
+
+      alert("Registration successful! Please log in.");
+      document.getElementById("register-section").classList.add("hidden");
+      document.getElementById("login-section").classList.remove("hidden");
+      document.getElementById("login-username").value = username;
+      document.getElementById("login-password").value = "";
+    }
+
+    function loginUser() {
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+      const user = users.find(u => u.username === username);
+
+      if (!user) {
+        document.getElementById("login-error").innerText = "";
+        document.getElementById("register-reminder").classList.remove("hidden");
+        return;
+      } else {
+        document.getElementById("register-reminder").classList.add("hidden");
+      }
+
+      let failedAttempts = JSON.parse(localStorage.getItem("failedAttempts")) || {};
+      if (!failedAttempts[username]) {
+        failedAttempts[username] = 0;
+      }
+
+      if (user && user.password === password) {
+        failedAttempts[username] = 0;
+        localStorage.setItem("failedAttempts", JSON.stringify(failedAttempts));
+        localStorage.setItem("currentUser", JSON.stringify(user));
+        document.getElementById("login-section").classList.add("hidden");
+        document.getElementById("info-section").classList.remove("hidden");
+        document.getElementById("login-error").innerText = "";
+      } else {
+        failedAttempts[username]++;
+        localStorage.setItem("failedAttempts", JSON.stringify(failedAttempts));
+
+        if (failedAttempts[username] >= 3) {
+          document.getElementById("login-section").classList.add("hidden");
+          document.getElementById("change-password-section").classList.remove("hidden");
+          document.getElementById("change-username").value = username;
+          document.getElementById("login-error").innerText = "";
+        } else {
+          document.getElementById("login-error").innerText = `Invalid credentials. Attempt ${failedAttempts[username]} of 3.`;
+        }
+      }
+    }
+
+    function showRegisterWithUsername() {
+      const username = document.getElementById("login-username").value;
+      document.getElementById("login-section").classList.add("hidden");
+      document.getElementById("register-section").classList.remove("hidden");
+      document.getElementById("reg-username").value = username;
+      document.getElementById("reg-password").value = "";
+    }
+
+    function changePassword() {
+      const username = document.getElementById("change-username").value;
+      const newPassword = document.getElementById("new-password").value;
+
+      if (!newPassword) {
+        return alert("Please enter a new password.");
+      }
+
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      const userIndex = users.findIndex(u => u.username === username);
+      if (userIndex !== -1) {
+        users[userIndex].password = newPassword;
+        localStorage.setItem("users", JSON.stringify(users));
+
+        let failedAttempts = JSON.parse(localStorage.getItem("failedAttempts")) || {};
+        failedAttempts[username] = 0;
+        localStorage.setItem("failedAttempts", JSON.stringify(failedAttempts));
+
+        alert("Password changed successfully! Please log in with your new password.");
+        document.getElementById("change-password-section").classList.add("hidden");
+        document.getElementById("login-section").classList.remove("hidden");
+        document.getElementById("login-password").value = "";
+      } else {
+        alert("User not found. Please try again.");
+      }
+    }
+
+    function saveUserInfo() {
+      const age = document.getElementById("age").value;
+      const gender = document.getElementById("gender").value;
+      const height = document.getElementById("height").value;
+      const weight = document.getElementById("weight").value;
+
+      if (!age || !gender || !height || !weight) {
+        alert("Please complete all fields.");
+        return;
+      }
+
+      const heightNum = parseFloat(height);
+      const weightNum = parseFloat(weight);
+
+      if (isNaN(heightNum) || isNaN(weightNum) || heightNum <= 0 || weightNum <= 0) {
+        alert("Please enter valid numbers for height and weight.");
+        return;
+      }
+
+      const bmi = (weightNum / ((heightNum / 100) ** 2)).toFixed(2);
+      localStorage.setItem("userInfo", JSON.stringify({ age, gender, height, weight, bmi }));
+
+      document.getElementById("info-section").classList.add("hidden");
+      document.getElementById("result-section").classList.remove("hidden");
+
+      document.getElementById("bmi-result").innerText = `Your BMI is ${bmi}`;
+      showUserSituation(bmi);
+      showFitnessPlan(bmi);
+    }
+
+    function showUserSituation(bmi) {
+      let message = "";
+      bmi = parseFloat(bmi);
+      if (bmi < 18.5) {
+        message = "You are underweight. Focus on muscle-building.";
+      } else if (bmi <= 24.9) {
+        message = "You have a healthy weight. Keep maintaining it!";
+      } else {
+        message = "You are overweight. A fat-reduction plan is recommended.";
+      }
+      document.getElementById("user-situation").innerText = message;
+    }
+
+    function showFitnessPlan(bmi) {
+      let html = "";
+      if (bmi < 18.5) {
+        html = `
+          <h4>Muscle Building Plan: 5-Day Weekly Schedule</h4>
+          <table class="table-plan">
+            <tr><th>Day</th><th>Workout</th><th>Sets</th><th>Reps</th></tr>
+            <tr><td rowspan="4">Monday: Upper Body Strength</td><td>Weighted Pull Ups</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td>Bench Press</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td>Barbell Rows</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td colspan="3">Rest: 90 seconds between sets</td></tr>
+            <tr><td rowspan="4">Tuesday: Lower Body Strength</td><td>Squats</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td>Deadlifts</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td>Lunges</td><td>4-5</td><td>10-12</td></tr>
+            <tr><td colspan="3">Rest: 90 seconds between sets</td></tr>
+            <tr><td>Wednesday</td><td colspan="3">Rest</td></tr>
+            <tr><td rowspan="4">Thursday: Back & Shoulders</td><td>Pull-ups</td><td>4-5</td><td>8-10</td></tr>
+            <tr><td>Overhead Press</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td>Barbell Shrugs</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td colspan="3">Rest: 90 seconds between sets</td></tr>
+            <tr><td rowspan="4">Friday: Chest & Arms</td><td>Incline Dumbbell Press</td><td>4-5</td><td>6-8</td></tr>
+            <tr><td>Barbell Curl</td><td>4-5</td><td>8-12</td></tr>
+            <tr><td>Tricep Rope Press Down</td><td>4-5</td><td>8-12</td></tr>
+            <tr><td colspan="3">Rest: 60-90 seconds between sets</td></tr>
+            <tr><td rowspan="5">Saturday: Legs & Abs</td><td>Squats</td><td>4-5</td><td>8-12</td></tr>
+            <tr><td>Leg Press</td><td>4-5</td><td>8-12</td></tr>
+            <tr><td>Seated Leg Curl</td><td>4-5</td><td>8-12</td></tr>
+            <tr><td>Weighted Ab Crunches</td><td>2-3</td><td>15-20</td></tr>
+            <tr><td colspan="3">Rest: 60-90 seconds between sets</td></tr>
+            <tr><td>Sunday</td><td colspan="3">OFF</td></tr>
+          </table>
+          <p><strong>Nutrition:</strong> Eat a calorie surplus with high-protein foods to fuel muscle growth.</p>
+        `;
+      } else if (bmi > 24.9) {
+        html = `
+          <h4>Fat Loss Plan: 4-Day Weekly Schedule</h4>
+          <table class="table-plan">
+            <tr><th>Day</th><th>Workout</th><th>Sets</th><th>Reps</th></tr>
+            <tr><td rowspan="5">Monday: Full Body Strength & Cardio</td><td>Push-ups</td><td>3-4</td><td>12-15</td></tr>
+            <tr><td>Squats</td><td>3-4</td><td>12-15</td></tr>
+            <tr><td>Dumbbell Rows</td><td>3-4</td><td>12-15</td></tr>
+            <tr><td>Jump Rope (10 minutes)</td><td>-</td><td>-</td></tr>
+            <tr><td colspan="3">Rest: 60-90 seconds between sets</td></tr>
+            <tr><td rowspan="4">Tuesday: Cardio + Core</td><td>Running or Cycling (30 minutes)</td><td>-</td><td>-</td></tr>
+            <tr><td>Plank (hold for 30-60 seconds)</td><td>3</td><td>-</td></tr>
+            <tr><td>Russian Twists</td><td>3</td><td>15 per side</td></tr>
+            <tr><td colspan="3">Rest: 60-90 seconds between sets</td></tr>
+            <tr><td rowspan="5">Thursday: Upper Body Strength</td><td>Dumbbell Bench Press</td><td>3-4</td><td>10-12</td></tr>
+            <tr><td>Dumbbell Shoulder Press</td><td>3-4</td><td>10-12</td></tr>
+            <tr><td>Bicep Curls</td><td>3-4</td><td>10-12</td></tr>
+            <tr><td>Tricep Extensions</td><td>3-4</td><td>10-12</td></tr>
+            <tr><td colspan="3">Rest: 60-90 seconds between sets</td></tr>
+            <tr><td rowspan="5">Saturday: Lower Body & Cardio</td><td>Lunges</td><td>3-4</td><td>12-15 per leg</td></tr>
+            <tr><td>Deadlifts</td><td>3-4</td><td>12-15</td></tr>
+            <tr><td>Leg Press</td><td>3-4</td><td>12-15</td></tr>
+            <tr><td>Cardio (Running, Cycling, or Rowing, 20-30 minutes)</td><td>-</td><td>-</td></tr>
+            <tr><td colspan="3">Rest: 60-90 seconds between sets</td></tr>
+          </table>
+          <p><strong>Nutrition:</strong> Aim for a calorie deficit and focus on high-protein, low-fat foods to aid in fat loss.</p>
+        `;
+      } else {
+        html = `
+          <h4>Maintenance Plan: 3-Day Weekly Schedule</h4>
+          <table class="table-plan">
+            <tr><th>Day</th><th>Workout</th><th>Sets</th><th>Reps</th></tr>
+            <tr><td rowspan="5">Monday: Full Body Workout</td><td>Squats</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td>Bench Press</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td>Deadlifts</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td>Pull Ups</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td colspan="3">Rest: 90 seconds between sets</td></tr>
+            <tr><td rowspan="4">Wednesday: Cardio & Core</td><td>Running or Cycling (20-30 minutes)</td><td>-</td><td>-</td></tr>
+            <tr><td>Plank (hold for 45-60 seconds)</td><td>3</td><td>-</td></tr>
+            <tr><td>Leg Raises</td><td>3</td><td>15</td></tr>
+            <tr><td colspan="3">Rest: 60 seconds between sets</td></tr>
+            <tr><td rowspan="5">Friday: Strength Training</td><td>Lunges</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td>Dumbbell Rows</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td>Overhead Press</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td>Tricep Dips</td><td>3-4</td><td>8-12</td></tr>
+            <tr><td colspan="3">Rest: 90 seconds between sets</td></tr>
+          </table>
+          <p><strong>Nutrition:</strong> Maintain a balanced diet to support your active lifestyle.</p>
+        `;
+      }
+      document.getElementById("fitness-plan-table").innerHTML = html;
+    }
+
+    function logoutUser() {
+      localStorage.removeItem("currentUser");
+      location.reload();
+    }
+  </script>
+</body>
+
+</html>
